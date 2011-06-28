@@ -1,0 +1,20 @@
+<%= render :layout => 'layouts/base' do %>
+
+  <%= grid 3 do %>
+
+      <p><b><%= @section.title_with_full_position %></b></p>
+      <ul>
+        <% @section.articles.each do |article| %>
+          <%= content_tag :li do %>
+            <%= link_to_unless article == @article, article.title_with_position, section_article_url(article.section, article) %>
+          <% end %>
+        <% end %>
+      </ul>
+
+  <% end %>
+
+  <%= grid 9, :clear => true do %>
+      <%= yield %>
+  <% end %>
+
+<% end %>

@@ -1,0 +1,9 @@
+<p><%= link_to "New #{resource_class.to_s}", new_resource_path, :remote => true %></p>
+
+<% if collection.empty? %>
+  No <%= resource_class.to_s.pluralize %>.
+<% else %>
+  <% collection.roots.each do |section| %>
+    <%= render :partial => 'list_item', :locals => { :resource => section } %>
+  <% end %>
+<% end %>

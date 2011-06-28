@@ -1,0 +1,14 @@
+<%= semantic_form_for resource, :url => (resource.persisted? ? resource_path(resource) : collection_url), :remote => true, :html => { :multipart => true } do |f| %>
+  <%= error_messages_for resource %>
+
+  <%= f.inputs :name => "Basic" do %>
+    <%= f.input :title %>
+    <%= f.input :summary %>
+    <%= f.input :body, :input_html => {:size => '50x10'} %>
+    <%= f.input :section, :as => :select, :collection => ancestry_options(Kb::Section.roots.arrange, :title) %>
+  <% end %>
+
+  <%= f.buttons do %>
+    <%= f.commit_button %>
+  <% end %>
+<% end %>
