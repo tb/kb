@@ -1,21 +1,16 @@
-<%= content_tag :h1, resource.title_with_full_position %>
+<%= grid 3 do %>
 
-<p><%= resource.desc %></p>
+  <%= render :partial => 'sidebar' %>
 
-<% if resource.articles.empty? %>
-
-  <% resource.children.each do |subsection| %>
-    <%= nested_items subsection.subtree.arrange(:order => :created_at) %>
-  <% end %>
-  
-<% else %>
-  <ul>
-  <% resource.articles.each do |article| %>
-    <li>
-      <h4><%= link_to article.title_with_full_position, section_article_path(article.section, article) %></h4>
-      <p><%= article.summary %><p>
-    </li>
-  <% end %>
-  </ul>
 <% end %>
 
+<%= grid 9, :clear => true do %>
+
+  <h1><%= @section.title_with_full_position %></h1>
+  <p><%= @section.desc %></p>
+
+  <% unless @section.articles.empty? %>
+    <%= render @section.articles %>
+  <% end %>
+
+<% end %>

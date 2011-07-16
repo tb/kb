@@ -1,0 +1,41 @@
+
+<div id="knowledge-base">
+[-] Knowledge base tree:
+
+<ul>
+  <%= render Kb::Section.roots %>
+</ul>
+</div>
+
+<% unless @section.articles.empty? %>
+  <div id="current-section">
+  [-] Current section:
+<ul>
+  <% @section.articles.each do |article| %>
+  <li data-article-id="<%= dom_id(article) -%>">
+    <%= content_tag :a, article.title, :href => "\##{dom_id(article)}" %>
+  </li>
+  <% end %>
+</ul>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#current-section').waypoint(function(event, direction) {
+      $(this).toggleClass('sticky', direction === "down");
+      event.stopPropagation();
+    });
+
+    $('.kb_article').waypoint(function(event, direction) {
+      var $active = $(this);
+
+      if (direction === "up") $active = $active.prev();
+      if (!$active.length) $active.end();
+
+      $('#current-section > ul > li').removeClass('current');
+      $('#current-section > ul > li[data-article-id=' + $active.attr('id') + ']').addClass('current');
+
+    }, {offset: '10px'} );
+  });
+</script>

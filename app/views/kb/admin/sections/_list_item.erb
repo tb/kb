@@ -1,18 +1,3 @@
-<%= content_tag :ul, :id => dom_id(resource) do %>
-  <%= content_tag :li do %>
-    <%= link_to resource.title, edit_admin_section_url(resource), :remote => true %>
-    <%= link_to "Add article", new_admin_section_article_url(resource), :remote => true %>
-
-    <%= content_tag :ul do %>
-      <% resource.articles.each do |article| %>
-        <%= content_tag :li, :id => dom_id(article) do %>
-          <%= render :partial => '/kb/admin/articles/list_item', :locals => { :resource => article } %>
-        <% end %>
-      <% end %>
-    <% end unless resource.articles.empty? %>
-
-    <% resource.children.each do |subsection| %>
-      <%= render :partial => 'list_item', :locals => { :resource => subsection } %>
-    <% end %>
-  <% end %>
-<% end %>
+<li id="<%= dom_id(section) %>" class="tree_node">
+  <%= yield %>
+</li>

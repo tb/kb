@@ -1,9 +1,14 @@
 module Kb
   class Admin::SectionsController < Kb::Admin::ApplicationController
 
-    class_attribute :resource_class; self.resource_class = Kb::Section
-    archetype :ajax_inject
+    archetype :ajax, :ajax_inject
     defaults :route_prefix => 'admin'
-    
+
+    def show
+      super do |format|
+        format.html { render :action => 'index' }
+      end
+    end
+
   end
 end

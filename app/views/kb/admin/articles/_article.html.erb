@@ -1,0 +1,16 @@
+<%= div_for article do %>
+
+  <a name="<%= dom_id(article) -%>"></a>
+  <h1>
+    <%= article.title %>
+    <span style="float: right;">
+      <%= link_to "Edit", edit_admin_section_article_url(article.section, article), :remote => true, :class => "button gray grouped leftrounded" %>
+      <%= link_to "X", admin_section_article_url(article.section, article), :method => :delete, :remote => true, :class => "button gray rightrounded", :confirm => 'Are you sure?' %>
+    </span>
+  </h1>
+
+  <p><%= article.summary %></p>
+
+  <%= raw article.body %>
+  
+<% end %>

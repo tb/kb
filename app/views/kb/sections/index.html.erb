@@ -1,0 +1,17 @@
+<%= grid 3 do %>
+
+  <%= render :partial => 'sidebar' %>
+
+<% end %>
+
+<%= grid 9, :clear => true do %>
+
+  <h1>Welcome to Knowledge Base browser!</h1>
+  <p>Recently updated:</p>
+  <ul>
+    <% @recently_added.each do |article|  %>
+      <li><%= link_to "#{article.section.title_with_full_position} / #{article.title}", section_path(article.section, :anchor => dom_id(article)) %></li>
+    <% end %>
+  </ul>
+
+<% end %>

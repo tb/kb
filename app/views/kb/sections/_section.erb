@@ -1,0 +1,9 @@
+<li id="<%= dom_id(section) %>" class="tree_node">
+  <%= link_to_unless section == @section, section.title_with_full_position, section_url(section) %>
+
+  <% unless section.children.empty? %>
+    <ul>
+      <%= render section.children %>
+    </ul>
+  <% end %>
+</li>

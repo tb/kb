@@ -1,0 +1,12 @@
+<div>
+  <%= link_to section.title, admin_section_url(section) %>
+  <span class="drag"></span>
+</div>
+
+<% unless section.children.empty? %>
+<ol>
+  <% section.children.each do |subsection| %>
+    <%= render :partial => 'section', :layout => 'list_item', :locals => { :section => subsection } %>
+  <% end %>
+</ol>
+<% end %>

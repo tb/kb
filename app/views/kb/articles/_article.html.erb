@@ -1,0 +1,6 @@
+<%= div_for article do %>
+  <a name="<%= dom_id(article) -%>"></a>
+  <%= content_tag :h1, article.title %>
+  <p><%= article.summary %></p>
+  <%= raw article.body %>
+<% end %>

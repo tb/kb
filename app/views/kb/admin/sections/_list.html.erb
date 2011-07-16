@@ -1,9 +1,13 @@
-<p><%= link_to "New #{resource_class.to_s}", new_resource_path, :remote => true %></p>
+<p>
+  <%= link_to "New section", new_resource_path, :remote => true, :class => "button blue wide bigrounded" %>
+</p>
 
 <% if collection.empty? %>
   No <%= resource_class.to_s.pluralize %>.
 <% else %>
-  <% collection.roots.each do |section| %>
-    <%= render :partial => 'list_item', :locals => { :resource => section } %>
-  <% end %>
+  <ol class="sortable">
+    <% collection.roots.each do |section| %>
+      <%= render :partial => 'section', :layout => 'list_item', :locals => { :section => section } %>
+    <% end %>
+  </ol>
 <% end %>

@@ -1,0 +1,70 @@
+<%= grid 3 do %>
+  <div id="<%= dom_class(resource_class).pluralize %>" class="list">
+    <%= render :partial => 'list' %>
+  </div>
+<% end %>
+
+<%= grid 9, :clear => true do %>
+  <% if @section.present? %>
+    <h1>
+      <%= @section.title_with_full_position %>
+      <span style="float: right;">
+        <%= link_to "Edit", edit_admin_section_url(resource), :class => "button gray grouped leftrounded", :remote => true %>
+        <%= link_to "X", admin_section_url(resource), :method => :delete, :class => "button gray rightrounded", :remote => true, :confirm => 'Are you sure?' %>
+        <%= link_to "New article", new_admin_section_article_url(resource), :class => "button blue bigrounded", :remote => true %>
+      </span>
+    </h1>
+    <div id="articles" class="list">
+      <% resource.articles.each do |article| %>
+        <%= render :partial => 'kb/admin/articles/article', :locals => { :article => article } %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<script type="text/javascript">
+//<![CDATA[
+  $(document).ready(function(){
+    $('#new_kb_section').live("ajax:success", function(){
+       nestedSortable();
+     });
+
+    function nestedSortable(){
+      $('ol.sortable').nestedSortable({
+        disableNesting: 'no-nest',
+        forcePlaceholderSize: true,
+        handle: '.drag',
+        items: 'li',
+        opacity: .6,
+        placeholder: 'placeholder',
+        tabSize: 25,
+        tolerance: 'pointer',
+        toleranceElement: '> div',
+
+        stop: function(event, ui) {
+          var str = [];
+          var map = {
+            'id': ui.item,
+            'parent_id': ui.item.parents('.tree_node:first'),
+            'prev_id': ui.item.prev(".tree_node"),
+            'next_id': ui.item.next(".tree_node")
+          }
+
+          $.each(map, function(key, value) {
+            var dom_id = value.attr('id');
+            if ( dom_id != undefined ) {
+              str.push( key.toString() + '=' + dom_id.match(/\d+$/) )
+            };
+          });
+
+          str.push( "authenticity_token=<%= form_authenticity_token %>");
+
+          jQuery.ajax({
+            url:'<%= kb.admin_sections_sort_path %>', type:'put', data: str.join('&')
+          });
+        }
+      });
+    }; nestedSortable();
+  });
+//]]>
+</script>
