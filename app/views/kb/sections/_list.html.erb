@@ -1,7 +1,0 @@
-<% if collection.empty? %>
-  No <%= resource_class.to_s.pluralize %>.
-<% else %>
-    <% collection.roots.each do |resource| %>
-      <%= nested_items resource.subtree.arrange(:order => :created_at) %>
-    <% end %>
-<% end %>
